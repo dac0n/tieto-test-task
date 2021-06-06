@@ -29,19 +29,33 @@ const updateDrawing = (borders, height) => {
 
 
 
-const Triangle = () => {
-  const [sides, setSides] = useState([200, 200, 200]);
+
+const Triangle = (props) => {
+
+  const PIXELS_PER_CM = 37.7952755906;    //a constant taken from wikipedia
+  const MAXIMAL_DRAWING_SIZE = Math.max(props.height.slice(0, -2), props.width.slice(0, -2)) / PIXELS_PER_CM;
+
+  const [sidesInCm, setSidesInCm] = useState([4, 4, 4]);
+  root.style.setProperty("--component-height", `${props.height}`);
+  root.style.setProperty("--component-width", `${props.width}`);
 
 
 
   useEffect(() => {
-    console.log('useEffect sides:', sides); 
-    let base = getBase(sides);
-    let height = getHeight(sides, base);
-    let borders = getBorders(sides, base, height)
+    let zoom = MAXIMAL_DRAWING_SIZE / Math.max(...sidesInCm);
+    zoom = zoom > 1 ? 1 : zoom;     //we need this to resize shapes if input values are too high to draw
+
+    let sidesInPixels = sidesInCm.map(x => x * PIXELS_PER_CM * zoom);
+    //if biggest side if bigger than canvas, it is resized to fit the canvas. 
+    //otherwise zoom is 1 and size is not changed (and pixel-cm ratio is untouched)
+
+    console.log('useEffect sides:', sidesInCm);
+    let base = getBase(sidesInPixels);
+    let height = getHeight(sidesInPixels, base);
+    let borders = getBorders(sidesInPixels, base, height)
     updateDrawing(borders, height);
     console.log(`borders: ${borders}, Height: ${height}, leftborder: ${borders[0]}, rightborder: ${borders[1]}`)
-  }, [sides])
+  }, [sidesInCm])
 
 
 
@@ -49,13 +63,11 @@ const Triangle = () => {
 
 
   const changeHandler = (e, number) => {
-    let tempSides = [...sides]; //we need this to force React into re-rendering after setSides.
+    let tempSides = [...sidesInCm]; //we need this to force React into re-rendering after setSides.
     //otherwise it will not rerender, since it will be the same object.
-    console.log('tempSides:',tempSides);
-    console.log('sides:', sides);
-    tempSides[number] = parseFloat(e.target.value);
+    tempSides[number] = parseInt(e.target.value) || 0;
     console.log('Temp sides after change', tempSides)
-    setSides(tempSides);
+    setSidesInCm(tempSides);
 
   }
 
@@ -65,21 +77,27 @@ const Triangle = () => {
         <div className="triangle-child" />
       </div>
       <div className="triangle-inputs">
-        <input
-          type="number"
-          onChange={(e) => { changeHandler(e, 0) }}
-          value={sides[0]}
-        />
-        <input
-          type="number"
-          onChange={(e) => { changeHandler(e, 1) }}
-          value={sides[1]}
-        />
-        <input
-          type="number"
-          onChange={(e) => { changeHandler(e, 2) }}
-          value={sides[2]}
-        />
+        <div>
+          <label>Side A:</label>
+          <input
+            type="number"
+            onChange={(e) => { changeHandler(e, 0) }}
+          />
+        </div>
+        <div>
+          <label>Side B:</label>
+          <input
+            type="number"
+            onChange={(e) => { changeHandler(e, 1) }}
+          />
+        </div>
+        <div>
+          <label>Side C:</label>
+          <input
+            type="number"
+            onChange={(e) => { changeHandler(e, 2) }}
+          />
+        </div>
       </div>
     </div>
   );

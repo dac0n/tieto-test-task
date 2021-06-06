@@ -7,8 +7,9 @@ body {
 }
 
 .triangle-container {
-  width: 500px;
-  height: 500px;
+  border: 1px solid rgb(151, 151, 151);
+  width: var(--component-width);
+  height: var(--component-height);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,14 +29,15 @@ body {
 
 .triangle-inputs {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.triangle-inputs > * {
+.triangle-inputs > * > * {
+  width: 100px;
   text-align: center; 
   border: 1px solid rgb(151, 151, 151);
   display: inline-block;
   padding: 10px 0px;
-  margin: 50px 0px;   
+  margin: 5px;
   cursor: default;
 }
