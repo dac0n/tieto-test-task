@@ -6,6 +6,7 @@ body {
   background: #F6F8FF;
 }
 
+
 .triangle-container {
   border: 1px solid rgb(151, 151, 151);
   width: var(--component-width);
@@ -15,6 +16,27 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+
+.triangle-text {
+  width: var(--component-width);
+  height: 50px;
+  text-align: center;
+  position: absolute;
+  font-size: 20px;
+  font-family: 'Helvetica';
+}
+
+#triangle-placeholder {
+  display: none;
+  top: calc(var(--component-height)/2);
+}
+
+#triangle-info {
+top: calc(var(--component-height)*0.92);
+}
+
+
 
 .triangle-child {
   width: 0;
@@ -40,4 +62,18 @@ body {
   padding: 10px 0px;
   margin: 5px;
   cursor: default;
+}
+
+#triangle-calculate-btn {
+  background-color: #3f3f3f; /* Green */
+  width: 150px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 0px;
+  text-align: center;
+  font-size: 22px;
+  font-family: 'Helvetica';
+  margin: 25px 2px;
+  cursor: pointer;
 }
