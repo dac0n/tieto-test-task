@@ -1,5 +1,5 @@
 {
-  "name": "minimal-reactjs-boilerplate",
+  "name": "tieto-test-task",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -36,6 +36,6 @@
     ]
   },
   "bin": {
-    "minimal-reactjs-boilerplate": "./bin/start.js"
+    "tieto-test-task": "./bin/start.js"
   }
 }
